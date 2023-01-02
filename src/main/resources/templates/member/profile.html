@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html th:replace="~{base/base :: base(~{::title},~{::link},~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title>Nbnb</title>
+  <link href="">
+</head>
+<body>
+<section>
+  <div class="min-h-75vh">
+    <div
+        class="container lg:w-5/12 md:w-1/2 xl:w-1/4 mx-auto my-10 flex flex-col items-center border p-6 border-gray-400">
+
+
+      <!--      <div class="{{h_and_w|default:'h-20 w-20'}} rounded-full bg-cover" style="background-image: url({{user.avatar.url}});">-->
+
+      <div class="h-20 w-20 bg-gray-700 rounded-full text-white flex justify-center items-center overflow-hidden">
+        <span class="text-3xl">관리자</span>
+      </div>
+
+      <div class="flex items-center">
+        <span class="text-3xl mt-1">관리자</span>
+        <i class="fas fa-check-circle text-teal-400 ml-1"></i>
+      </div>
+      <span class="text-lg mb-5">관리자 설명입니다.</span>
+
+      <a th:href="@{/members/profile_detail}" class="btn-link">프로필 수정</a>
+    </div>
+
+    <!--TODO:: room list-->
+    <!--{% if user_obj.rooms.count > 0 %}
+    <h3 class="mb-12 text-2xl text-center">{{user_obj.first_name}}'s Rooms</h3>
+    <div class="container mx-auto pb-10 ">
+      <div class="flex flex-wrap -mx-40 mb-10">
+        {% for room in user_obj.rooms.all %}
+        {% include 'mixins/room_card.html' with room=room %}
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}-->
+  </div>
+</section>
+</body>
+</html>

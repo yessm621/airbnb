@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html th:replace="~{base/base :: base(~{::title},~{::link},~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title>로그인 | Nbnb</title>
+  <link href="">
+</head>
+<body>
+<section>
+  <div class="container lg:w-5/12 md:w-1/2 xl:w-1/4 mx-auto my-10 flex-col items-center border p-6 border-gray-400">
+
+    <div th:replace="~{base/partials/social_login :: socialLoginFragment}"></div>
+
+    <form method="POST" class="w-full" enctype="multipart/form-data">
+
+
+      <!--에러 발생할 경우 표출할 텍스트-->
+      <!--{% if form.non_field_errors %}
+      {% for error in form.non_field_errors %}
+      <span class="text-red-700 font-medium text-sm">{{error}}</span>
+      {% endfor %}
+      {% endif %}-->
+
+      <div class="input w-full">
+        <input type="text" placeholder="이메일">
+      </div>
+      <div class="input w-full">
+        <input type="password" placeholder="비밀번호">
+      </div>
+
+      <button class="btn bg-red-500 text-white">로그인</button>
+    </form>
+
+    <div class="flex justify-center mt-3">
+      <span>Don't have an account?</span>
+      <a th:href="@{/members/signup}" class="ml-1 font-medium text-teal-500">회원가입</a>
+    </div>
+    <div class="flex justify-center mt-3">
+      <span>Did you forget your password?</span>
+      <a th:href="@{/members/password}" class="ml-1 font-medium text-teal-500">비밀번호 찾기</a>
+    </div>
+
+  </div>
+</section>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html th:replace="~{base/base :: base(~{::title},~{::link},~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title>프로필 | Nbnb</title>
+  <link href="">
+</head>
+<body>
+<section>
+  <div class="container lg:w-5/12 md:w-1/2 xl:w-1/4 mx-auto my-10 flex flex-col items-center border p-6 border-gray-400">
+
+    <form method="POST" class="w-full" enctype="multipart/form-data">
+      <!--에러 발생할 경우 표출할 텍스트-->
+      <!--{% if form.non_field_errors %}
+      {% for error in form.non_field_errors %}
+      <span class="text-red-700 font-medium text-sm">{{error}}</span>
+      {% endfor %}
+      {% endif %}-->
+      <div class="input w-full">
+        <input type="text" placeholder="이메일">
+      </div>
+      <div class="input w-full">
+        <input type="text" placeholder="이름">
+      </div>
+
+      <div class="input w-full">
+        <textarea placeholder="설명"></textarea>
+      </div>
+
+      <div class="input w-full">
+        <select style="height: 70px;">
+          <option value="">-- 선택 --</option>
+          <option value="kr">한국</option>
+          <option value="en">영어</option>
+        </select>
+      </div>
+
+
+      <button class="btn bg-red-500 text-white">프로필 수정</button>
+    </form>
+
+    <div class="mt-5">
+      <a th:href="@{/members/password}" class="text-teal-500 font-medium">비밀번호 찾기</a>
+    </div>
+    <!--email 로그인의 경우 비밀번호 찾기 기능-->
+    <!--{% if object.login_method == 'email' %}
+    <div class="mt-5">
+      <a href="{% url 'users:password' %}" class="text-teal-500 font-medium">Change Password</a>
+    </div>
+    {% endif %}-->
+
+  </div>
+</section>
+</body>
+</html>

@@ -10,4 +10,10 @@ public class MainController {
     public String main() {
         return "index";
     }
+
+
+    @GetMapping("/404")
+    public String error() {
+        return "base/404";
+    }
 }
