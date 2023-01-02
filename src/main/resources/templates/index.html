@@ -8,8 +8,31 @@
 </head>
 <body>
 <section>
-  <div class="block m-4">
-    <h1>메인 페이지</h1>
+  <div class="container mx-auto pb-10">
+
+    <div class="rounded-xl bg-gray-800 -mx-40 h-50vh mt-32 mb-24 bg-cover bg-center"
+         style="background-image:url('/image/logo.png');"></div>
+
+    <div class="flex flex-wrap -mx-40 mb-10">
+      <div th:replace="~{base/partials/room_card :: roomCardFragment}"></div>
+    </div>
+
+    <!--paging-->
+    <div class="flex items-center justify-center mx-auto container">
+
+      <a href="?page=1" class="text-teal-500">
+        <i class="fas fa-arrow-left fa-lg"></i>
+      </a>
+
+      <span class="mx-3 font-medium text-lg">
+        Page 1 of 10
+      </span>
+
+      <a href="?page=2" class="text-teal-500">
+        <i class="fas fa-arrow-right fa-lg"></i>
+      </a>
+
+    </div>
   </div>
 </section>
 </body>

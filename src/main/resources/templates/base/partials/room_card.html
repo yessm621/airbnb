@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="w-1/4 mb-10 px-2 overflow-hidden" th:fragment="roomCardFragment">
+  <a href="{% url 'rooms:detail' room.pk %}">
+    <div class="w-full h-64 bg-cover bg-center rounded-lg mb-2 "
+         style="background-image: url('/image/logo.png');"></div>
+    <div class="flex justify-between mb-2 truncate">
+      <div class="w-4/5 overflow-hidden flex">
+
+        <span
+            class="mr-2 uppercase font-medium text-xs border border-black text-black rounded py-px px-1">Superhost</span>
+
+        <span class="text-sm text-gray-600 block truncate">방 나라, 방 도시 이름</span>
+      </div>
+      <span class="text-sm flex items-center">
+                <i class="fas fa-star text-red-500 text-xs mr-1"></i> 방 점수
+            </span>
+    </div>
+    <span class="text-black w-11/12 block truncate">방 이름</span>
+  </a>
+</div>
+</body>
+</html>
