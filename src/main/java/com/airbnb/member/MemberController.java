@@ -32,4 +32,9 @@ public class MemberController {
     public String profileDetail() {
         return "member/profile_detail";
     }
+
+    @GetMapping("/scrap")
+    public String scrap() {
+        return "member/scrap";
+    }
 }

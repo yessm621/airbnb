@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html th:replace="~{base/base :: base(~{::title},~{::link},~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title>Nbnb</title>
+  <link href="">
+</head>
+<body>
+<section>
+  <div class="container mx-auto my-10 flex flex-col">
+
+    <div class="border-t border-l border-r bg-cover bg-center h-56 rounded-t-lg"
+         style="background-image: url('/image/logo.png');"></div>
+
+    <div class="flex flex-col items-start border-l border-r border-t border-b">
+      <div class="font-medium border-b py-8 px-5 w-full">
+        2023.01.01(check_in) - 2023.01.05(check_out)
+        <span class="ml-5 text-yellow-500">pending</span>
+        <span class="ml-5 text-red-600">canceled</span>
+        <span class="ml-5 text-teal-600">etc</span>
+      </div>
+
+      <span class="text-2xl border-b p-5 mt-2 w-full">예약된 숙소 이름</span>
+
+      <div class="flex p-5 border-b w-full">
+        <div class="flex flex-col items-center">
+          <!--      <div class="{{h_and_w|default:'h-20 w-20'}} rounded-full bg-cover" style="background-image: url({{user.avatar.url}});">-->
+
+          <div class="h-20 w-20 bg-gray-700 rounded-full text-white flex justify-center items-center overflow-hidden">
+            <span class="text-3xl">호스트</span>
+          </div>
+
+          <span class="mt-2 text-gray-500">호스트 이름</span>
+        </div>
+
+        <div class="ml-5 flex flex-col">
+          <span class="font-medium mb-px">Contact your Airbnb Host</span>
+          <a th:href="@{/chats/send}" class="font-medium text-teal-500">Send a Message</a>
+        </div>
+      </div>
+
+      <div class="py-10 px-5">
+
+        <!--이용 완료-->
+        <span class="font-medium text-2xl text-center w-full block mb-5">Write your review</span>
+        <form th:action="@{/reviews/create}" method="POST" class="w-1/2 mx-auto">
+
+          <button class="btn-link mt-5">Submit Review</button>
+        </form>
+
+        <!--예약 상태 일 때-->
+        <!--pending-->
+        <a href="{% url 'reservations:edit' reservation.pk 'cancel' %}" class="btn-link block px-5">Cancel Reservation</a>
+        <!--호스트일때-->
+        <a href="{% url 'reservations:edit' reservation.pk 'confirm' %}" class="btn-link block px-3 mb-5">Confirm Reservation</a>
+      </div>
+    </div>
+  </div>
+</section>
+</body>
+</html>
