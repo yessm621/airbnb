@@ -12,4 +12,14 @@ public class RoomController {
     public String room() {
         return "/room/room_create";
     }
+
+    @GetMapping("/detail")
+    public String roomDetail() {
+        return "/room/room_detail";
+    }
+
+    @GetMapping("/edit")
+    public String roomEdit() {
+        return "/room/room_edit";
+    }
 }
