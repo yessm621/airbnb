@@ -1,4 +1,4 @@
-package com.airbnb.room;
+package com.airbnb.room.entity;
 
 import lombok.Getter;
 

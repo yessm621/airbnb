@@ -1,4 +1,4 @@
-package com.airbnb.room;
+package com.airbnb.room.entity;
 
 import lombok.Getter;
 
@@ -6,11 +6,11 @@ import javax.persistence.*;
 
 @Entity
 @Getter
-public class RoomFacilities {
+public class RoomAmenities {
 
     @Id
     @GeneratedValue
-    @Column(name = "room_facilities_id")
+    @Column(name = "room_amenities_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -18,6 +18,6 @@ public class RoomFacilities {
     private Room room;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "facilities")
-    private Facilities facilities;
+    @JoinColumn(name = "amenities_id")
+    private Amenities amenities;
 }

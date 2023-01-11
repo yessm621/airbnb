@@ -1,5 +1,6 @@
-package com.airbnb.room;
+package com.airbnb.room.entity;
 
+import com.airbnb.common.BaseEntity;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -8,7 +9,7 @@ import static javax.persistence.FetchType.*;
 
 @Entity
 @Getter
-public class Photo {
+public class Photo extends BaseEntity {
 
     @Id
     @GeneratedValue
@@ -19,5 +20,6 @@ public class Photo {
     @JoinColumn(name = "room_id")
     private Room room;
 
+    @Lob
     private String file;
 }

@@ -1,4 +1,4 @@
-package com.airbnb.member;
+package com.airbnb.member.entity;
 
 public enum LoginMethod {
     EMAIL, KAKAO, GITHUB

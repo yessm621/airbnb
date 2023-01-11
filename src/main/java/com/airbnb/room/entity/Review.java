@@ -1,13 +1,14 @@
-package com.airbnb.room;
+package com.airbnb.room.entity;
 
-import com.airbnb.member.Member;
+import com.airbnb.common.BaseEntity;
+import com.airbnb.member.entity.Member;
 import lombok.Getter;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
-public class Review {
+public class Review extends BaseEntity {
 
     @Id
     @GeneratedValue

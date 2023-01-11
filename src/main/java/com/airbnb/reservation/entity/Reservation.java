@@ -1,7 +1,8 @@
-package com.airbnb.reservation;
+package com.airbnb.reservation.entity;
 
-import com.airbnb.member.Member;
-import com.airbnb.room.Room;
+import com.airbnb.common.BaseEntity;
+import com.airbnb.member.entity.Member;
+import com.airbnb.room.entity.Room;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -9,7 +10,7 @@ import java.time.LocalDate;
 
 @Entity
 @Getter
-public class Reservation {
+public class Reservation extends BaseEntity {
 
     @Id
     @GeneratedValue
