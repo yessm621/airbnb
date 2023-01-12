@@ -12,7 +12,7 @@ import static javax.persistence.FetchType.*;
 public class Photo extends BaseEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "photo_id")
     private Long id;
 

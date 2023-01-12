@@ -3,7 +3,9 @@ package com.airbnb.reservation.entity;
 import com.airbnb.common.BaseEntity;
 import com.airbnb.member.entity.Member;
 import com.airbnb.room.entity.Room;
+import com.sun.istack.NotNull;
 import lombok.Getter;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -13,7 +15,7 @@ import java.time.LocalDate;
 public class Reservation extends BaseEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "reservation_id")
     private Long id;
 
@@ -27,6 +29,11 @@ public class Reservation extends BaseEntity {
 
     private LocalDate startDate;
     private LocalDate endDate;
-    private String status;
+
+    @Enumerated(value = EnumType.STRING)
+    @Column(length = 10)
+    private ReservationStatus status; // PENDING, PAID, CANCELED, CONFIRMED
+
+    @ColumnDefault("0")
     private int price;
 }

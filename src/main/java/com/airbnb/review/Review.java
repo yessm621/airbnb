@@ -1,8 +1,10 @@
-package com.airbnb.room.entity;
+package com.airbnb.review;
 
 import com.airbnb.common.BaseEntity;
 import com.airbnb.member.entity.Member;
+import com.airbnb.room.entity.Room;
 import lombok.Getter;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 
@@ -11,7 +13,7 @@ import javax.persistence.*;
 public class Review extends BaseEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "review_id")
     private Long id;
 
@@ -25,5 +27,12 @@ public class Review extends BaseEntity {
 
     @Lob
     private String content;
-    private int score;
+    @ColumnDefault("0")
+    private int accuracy;
+    @ColumnDefault("0")
+    private int communication;
+    @ColumnDefault("0")
+    private int cleanliness;
+    @ColumnDefault("0")
+    private int location;
 }
