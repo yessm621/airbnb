@@ -2,6 +2,7 @@ package com.airbnb.member.entity;
 
 import com.airbnb.common.BaseEntity;
 import com.sun.istack.NotNull;
+import lombok.Builder;
 import lombok.Getter;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@Builder
 public class Member extends BaseEntity {
 
     @Id
