@@ -1,6 +1,6 @@
 package com.airbnb.member;
 
-import com.airbnb.member.dto.RegisterForm;
+import com.airbnb.member.dto.RegisterDto;
 import com.airbnb.member.entity.Member;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,7 +22,7 @@ class MemberServiceTest {
     @Test
     @DisplayName("회원가입 성공")
     void register_success() {
-        RegisterForm form = RegisterForm.builder()
+        RegisterDto form = RegisterDto.builder()
                 .email("yessm621@gmail.com")
                 .password("asdf#@!123")
                 .passwordConfirm("asdf#@!123")

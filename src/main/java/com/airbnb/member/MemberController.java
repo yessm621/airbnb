@@ -1,7 +1,12 @@
 package com.airbnb.member;
 
+import com.airbnb.member.dto.RegisterDto;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -14,7 +19,24 @@ public class MemberController {
     }
 
     @GetMapping("/signup")
-    public String signup() {
+    public String signup(Model model) {
+        model.addAttribute("dto", new RegisterDto());
+        return "member/signup";
+    }
+
+    @PostMapping("/signup")
+    public String signup(@Validated RegisterDto dto, BindingResult result, Model model) {
+
+        if (!dto.getPassword().equals(dto.getPasswordConfirm())) {
+            result.reject("PasswordDoNotMatch", "비밀번호가 일치하지 않습니다.");
+        }
+
+        if (result.hasErrors()) {
+            return "/member/signup";
+        }
+
+
+
         return "member/signup";
     }
 
