@@ -1,34 +1,33 @@
-package com.airbnb.member;
+package com.airbnb.common;
 
-import com.airbnb.member.dto.RegisterDto;
+import com.airbnb.member.MemberRepository;
 import com.airbnb.member.entity.LoginMethod;
 import com.airbnb.member.entity.Member;
 import com.airbnb.member.entity.MemberRole;
 import com.airbnb.member.entity.MemberStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Component;
 
-@Service
-@Transactional(readOnly = true)
+import javax.annotation.PostConstruct;
+
+@Component
 @RequiredArgsConstructor
-public class MemberService {
+public class TestDataInit {
 
     private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public void signup(RegisterDto dto) {
-        Member entity = Member.builder()
-                .email(dto.getEmail())
-                .password(bCryptPasswordEncoder.encode(dto.getPassword()))
-                .name(dto.getName())
+    @PostConstruct
+    public void init() {
+        memberRepository.save(Member.builder()
+                .email("yessm621@gmail.com")
+                .password(bCryptPasswordEncoder.encode("test123!!!"))
+                .name("노승미")
                 .loginMethod(LoginMethod.EMAIL)
                 .superHost(false)
                 .role(MemberRole.ROLE_USER)
                 .status(MemberStatus.ACTIVE)
-                .build();
-
-        memberRepository.save(entity);
+                .build());
     }
 }

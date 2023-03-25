@@ -12,9 +12,11 @@
 
     <div th:replace="~{base/partials/social_login :: socialLoginFragment}"></div>
 
-    <form method="POST" class="w-full" th:object="${dto}">
+    <form method="POST" class="w-full" th:object="${dto}" th:action="@{/members/signup}">
       <div th:if="${#fields.hasGlobalErrors()}">
-        <span class="text-sm text-red-700 font-medium " th:each="err : ${#fields.globalErrors()}" th:text="${err}"></span>
+        <span class="text-sm text-red-700 font-medium" th:each="err : ${#fields.globalErrors()}" th:text="${err}">
+          회원가입 오류
+        </span>
       </div>
 
       <div class="input w-full">
@@ -42,7 +44,7 @@
         </div>
       </div>
 
-      <button class="btn bg-red-500 text-white">회원가입</button>
+      <button type="submit" class="btn bg-red-500 text-white">회원가입</button>
     </form>
 
     <div class="flex justify-center mt-5">

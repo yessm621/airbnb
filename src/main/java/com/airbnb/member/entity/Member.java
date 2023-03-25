@@ -2,9 +2,10 @@ package com.airbnb.member.entity;
 
 import com.airbnb.common.BaseEntity;
 import com.sun.istack.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import org.hibernate.annotations.ColumnDefault;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -12,6 +13,8 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class Member extends BaseEntity {
 
@@ -44,8 +47,8 @@ public class Member extends BaseEntity {
     private String description;
     private LocalDateTime lastLoginDate;
 
-    @Column(columnDefinition="tinyint(1) default 0")
-    private Boolean superhost;
+    @Column(columnDefinition = "tinyint(1) default 0")
+    private Boolean superHost;
 
     @Enumerated(value = EnumType.STRING)
     @Column(length = 10)
@@ -53,5 +56,5 @@ public class Member extends BaseEntity {
 
     @Enumerated(value = EnumType.STRING)
     @Column(length = 10)
-    private MemberGrade grade; // USER, HOST, ADMIN
+    private MemberRole role; // USER, HOST, ADMIN
 }

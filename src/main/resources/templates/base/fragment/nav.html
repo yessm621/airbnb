@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <body>
 <div class="h-full" th:fragment="navFragment">
   <ul class="flex items-center text-sm font-medium h-full">
@@ -20,9 +21,10 @@
     <li class="nav_link"><a href="{{user.get_absolute_url}}">{% trans "Profile" %}</a></li>
     <li class="nav_link"><a href="{% url "users:logout" %}">{% trans "Log out" %}</a></li>
     {% else %}-->
-    <!--로그인 전-->
-    <li class="nav_link"><a th:href="@{/members/login}">로그인</a></li>
-    <li class="nav_link"><a th:href="@{/members/signup}">회원가입</a></li>
+    <li class="nav_link"><a sec:authorize="isAuthenticated()" th:href="@{/members/profile}">프로필</a></li>
+    <li class="nav_link"><a sec:authorize="isAuthenticated()" th:href="@{/members/logout}">로그아웃</a></li>
+    <li class="nav_link"><a sec:authorize="isAnonymous()" th:href="@{/members/login}">로그인</a></li>
+    <li class="nav_link"><a sec:authorize="isAnonymous()" th:href="@{/members/signup}">회원가입</a></li>
   </ul>
 </div>
 </body>
