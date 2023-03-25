@@ -13,22 +13,33 @@
     <div th:replace="~{base/partials/social_login :: socialLoginFragment}"></div>
 
     <form method="POST" class="w-full" th:object="${dto}">
-      <!--에러 발생할 경우 표출할 텍스트-->
       <div th:if="${#fields.hasGlobalErrors()}">
-        <span class="text-red-700 font-medium text-sm" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></span>
+        <span class="text-sm text-red-700 font-medium " th:each="err : ${#fields.globalErrors()}" th:text="${err}"></span>
       </div>
 
       <div class="input w-full">
         <input type="text" th:field="*{email}" placeholder="이메일">
+        <div class="mt-1 text-sm text-red-700 font-medium field-error" th:errors="*{email}">
+          이메일 오류
+        </div>
       </div>
       <div class="input w-full">
         <input type="password" th:field="*{password}" placeholder="비밀번호">
+        <div class="mt-1 text-sm text-red-700 font-medium field-error" th:errors="*{password}">
+          비밀번호 오류
+        </div>
       </div>
       <div class="input w-full">
         <input type="password" th:field="*{passwordConfirm}" placeholder="비밀번호 확인">
+        <div class="mt-1 text-sm text-red-700 font-medium field-error" th:errors="*{passwordConfirm}">
+          비밀번호 확인 오류
+        </div>
       </div>
       <div class="input w-full">
         <input type="text" th:field="*{name}" placeholder="이름">
+        <div class="mt-1 text-sm text-red-700 font-medium field-error" th:errors="*{name}">
+          이름 오류
+        </div>
       </div>
 
       <button class="btn bg-red-500 text-white">회원가입</button>
