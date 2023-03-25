@@ -54,24 +54,4 @@ public class MemberController {
 
         return "redirect:/member/login";
     }
-
-    @GetMapping("/password")
-    public String passwordModify() {
-        return "member/password_modify";
-    }
-
-    @GetMapping("/profile")
-    public String profile() {
-        return "member/profile";
-    }
-
-    @GetMapping("/profile_detail")
-    public String profileDetail() {
-        return "member/profile_detail";
-    }
-
-    @GetMapping("/scrap")
-    public String scrap() {
-        return "member/scrap";
-    }
 }
