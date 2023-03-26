@@ -1,5 +1,6 @@
 package com.airbnb.member;
 
+import com.airbnb.member.dto.FindPasswordDto;
 import com.airbnb.member.dto.RegisterDto;
 import com.airbnb.member.entity.LoginMethod;
 import com.airbnb.member.entity.Member;
@@ -30,5 +31,12 @@ public class MemberService {
                 .build();
 
         memberRepository.save(entity);
+    }
+
+    @Transactional
+    public void passwordModify(FindPasswordDto dto) {
+        System.out.println("dto.getPassword() = " + dto.getPassword());
+        Member findMember = memberRepository.findByEmail(dto.getEmail());
+        findMember.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
     }
 }

@@ -18,11 +18,6 @@ public class ProfileController {
         return "profile/profile_detail";
     }
 
-    @GetMapping("/password")
-    public String passwordModify() {
-        return "profile/password_modify";
-    }
-
     @GetMapping("/scrap")
     public String scrap() {
         return "profile/scrap";
