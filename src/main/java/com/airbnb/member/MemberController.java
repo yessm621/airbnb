@@ -1,9 +1,11 @@
 package com.airbnb.member;
 
+import com.airbnb.common.security.CurrentUser;
+import com.airbnb.common.security.CustomUserDetails;
 import com.airbnb.mail.MailService;
 import com.airbnb.mail.dto.MailSendDto;
-import com.airbnb.member.dto.RegisterDto;
 import com.airbnb.member.dto.FindPasswordDto;
+import com.airbnb.member.dto.RegisterDto;
 import com.airbnb.member.entity.Member;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -101,7 +103,7 @@ public class MemberController {
     }
 
     @PostMapping("/password")
-    public String passwordModify(@Validated @ModelAttribute("dto") FindPasswordDto dto, BindingResult result) {
+    public String passwordModify(@CurrentUser CustomUserDetails user, @Validated @ModelAttribute("dto") FindPasswordDto dto, BindingResult result) {
 
         if (!dto.getPassword().equals(dto.getPasswordConfirm())) {
             result.reject("PasswordDoNotMatch", "비밀번호가 일치하지 않습니다.");
@@ -111,15 +113,16 @@ public class MemberController {
             return "/member/password_modify";
         }
 
+        dto.setEmail(user.getEmail());
         memberService.passwordModify(dto);
 
-        return "redirect:/member/login";
+        return "redirect:/members/logout";
     }
 
     private String randomPassword() {
-        char[] pwCharSet = new char[] {
+        char[] pwCharSet = new char[]{
                 '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-                'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
+                'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
                 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
         };
         int idx = 0;

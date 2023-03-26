@@ -35,7 +35,6 @@ public class MemberService {
 
     @Transactional
     public void passwordModify(FindPasswordDto dto) {
-        System.out.println("dto.getPassword() = " + dto.getPassword());
         Member findMember = memberRepository.findByEmail(dto.getEmail());
         findMember.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
     }

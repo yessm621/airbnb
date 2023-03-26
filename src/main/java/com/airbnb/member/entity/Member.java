@@ -1,7 +1,6 @@
 package com.airbnb.member.entity;
 
 import com.airbnb.common.BaseEntity;
-import com.airbnb.member.dto.FindPasswordDto;
 import com.sun.istack.NotNull;
 import lombok.*;
 
