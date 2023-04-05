@@ -12,10 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
@@ -44,7 +42,8 @@ public class ProfileController {
 
     @PostMapping("/modify")
     public String profileModify(@Validated @ModelAttribute("dto") ProfileDetailDto dto, BindingResult result,
-                                @CurrentUser CustomUserDetails user) throws IOException {
+                                @RequestParam(value = "profile", required = false) MultipartFile profile,
+                                @CurrentUser CustomUserDetails user, Model model) throws IOException {
 
         if (!dto.getEmail().equals(user.getEmail())) {
             result.reject("DoHaveNotPermission", "권한이 없습니다.");
@@ -63,7 +62,7 @@ public class ProfileController {
             return "/profile/profile_detail";
         }
 
-        profileService.save(dto);
+        profileService.save(dto, profile);
 
         return "redirect:/profile";
     }

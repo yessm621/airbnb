@@ -17,5 +17,4 @@ public class ProfileDetailDto {
     private String description;
     private String phone;
     private LocalDate birth;
-    private MultipartFile image;
 }

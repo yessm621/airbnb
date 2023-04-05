@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
@@ -46,15 +47,15 @@ public class ProfileService {
     }
 
     @Transactional
-    public void save(ProfileDetailDto dto) throws IOException {
+    public void save(ProfileDetailDto dto, MultipartFile profile) throws IOException {
 
         Member findMember = memberRepository.findByEmail(dto.getEmail());
         findMember.setDescription(dto.getDescription());
         findMember.setPhone(dto.getPhone());
         findMember.setBirthdate(dto.getBirth());
 
-        if (dto.getImage() != null) {
-            String path = s3Uploader.upload(dto.getImage(), DIR_NAME);
+        if (!profile.isEmpty()) {
+            String path = s3Uploader.upload(profile, DIR_NAME);
             log.info("이미지 업로드 경로={}", path);
             findMember.setProfile(path);
         }
