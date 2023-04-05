@@ -25,6 +25,8 @@ public class SecurityConfig {
                 .authorizeRequests()
 //                .antMatchers("/**").permitAll()
                 .antMatchers("/", "/members/*").permitAll()
+                // TODO:: 파일 테스트 시 오류 발생해서 일단 모든 경로에 대해 허용해놓음. 향후 삭제해야할 코드.
+                .antMatchers("/*").permitAll()
                 .antMatchers("/image/**", "/css/**", "/js/**").permitAll()
                 .anyRequest().authenticated();
         http

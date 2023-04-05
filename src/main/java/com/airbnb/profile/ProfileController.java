@@ -1,10 +1,13 @@
 package com.airbnb.profile;
 
+import com.airbnb.common.s3.S3Uploader;
 import com.airbnb.common.security.CurrentUser;
 import com.airbnb.common.security.CustomUserDetails;
+import com.airbnb.profile.dto.ProfileDetailDto;
 import com.airbnb.profile.dto.ProfileDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,6 +17,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.io.IOException;
+
 @Slf4j
 @Controller
 @RequestMapping("profile")
@@ -21,22 +26,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ProfileController {
 
     private final ProfileService profileService;
+    private final S3Uploader s3Uploader;
 
     @GetMapping
-    public String profile() {
+    public String profile(@CurrentUser CustomUserDetails user, Model model) {
+        ProfileDto dto = profileService.profileInfo(user.getEmail());
+        model.addAttribute("dto", dto);
         return "profile/profile";
     }
 
     @GetMapping("/detail")
     public String profileDetail(@CurrentUser CustomUserDetails user, Model model) {
-        ProfileDto dto = profileService.getProfileDetail(user.getEmail());
+        ProfileDetailDto dto = profileService.profileDetail(user.getEmail());
         model.addAttribute("dto", dto);
         return "profile/profile_detail";
     }
 
     @PostMapping("/modify")
-    public String profileModify(@Validated @ModelAttribute("dto") ProfileDto dto, BindingResult result,
-                                @CurrentUser CustomUserDetails user) {
+    public String profileModify(@Validated @ModelAttribute("dto") ProfileDetailDto dto, BindingResult result,
+                                @CurrentUser CustomUserDetails user) throws IOException {
 
         if (!dto.getEmail().equals(user.getEmail())) {
             result.reject("DoHaveNotPermission", "권한이 없습니다.");
@@ -52,12 +60,18 @@ public class ProfileController {
 
         if (result.hasErrors()) {
             log.info("error={}", result);
-            return "/profile/profile";
+            return "/profile/profile_detail";
         }
 
         profileService.save(dto);
 
-        return "redirect:/profile/detail";
+        return "redirect:/profile";
+    }
+
+    @GetMapping("/download")
+    public ResponseEntity<byte[]> download(String fileUrl) throws IOException {
+        String filePath = fileUrl.substring(52);
+        return s3Uploader.download(filePath);
     }
 
     @GetMapping("/scrap")
