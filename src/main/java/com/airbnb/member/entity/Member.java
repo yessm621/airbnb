@@ -5,7 +5,6 @@ import com.sun.istack.NotNull;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -36,9 +35,9 @@ public class Member extends BaseEntity {
 
     @Lob
     private String profile;
-    private LocalDate birthdate;
+    private String birthdate;
 
-    @Column(length = 10)
+    @Column(length = 11)
     private String phone;
 
     @Lob
