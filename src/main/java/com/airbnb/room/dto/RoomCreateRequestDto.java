@@ -9,7 +9,7 @@ import java.time.LocalTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class RoomCreateDto {
+public class RoomCreateRequestDto {
 
     private String title;
     private String description;
@@ -32,4 +32,7 @@ public class RoomCreateDto {
 
     private Boolean instantBook;
     private String roomType;
+    private String[] amenities;
+    private String[] facilities;
+    private String[] houseRules;
 }

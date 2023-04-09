@@ -8,10 +8,11 @@
 </head>
 <body>
 <section>
-  <div class="container lg:w-5/12 md:w-1/2 xl:w-1/3 mx-auto my-10 flex flex-col items-center border p-6 border-gray-400">
+  <div
+      class="container lg:w-5/12 md:w-1/2 xl:w-1/3 mx-auto my-10 flex flex-col items-center border p-6 border-gray-400">
 
     <form method="POST" class="w-full" th:object="${dto}" th:action="@{/room/create/}">
-
+      <span class="text-gray-600 font-medium text-lg">Information.</span>
       <div class="input w-full">
         <input type="text" th:field="*{title}" placeholder="숙소 이름">
       </div>
@@ -19,17 +20,27 @@
         <!--<span class="text-red-700 font-medium text-sm">오류입니다.</span>-->
         <textarea th:field="*{description}" placeholder="설명"></textarea>
       </div>
-
       <div class="input w-full">
-        <input type="text" th:field="*{country}"  placeholder="나라">
+        <input type="text" th:field="*{price}" placeholder="금액">
+      </div>
+
+      <span class="text-gray-600 font-medium text-lg">Address</span>
+      <div class="input w-full">
+        <input type="text" th:field="*{country}" placeholder="나라">
       </div>
       <div class="input w-full">
         <input type="text" th:field="*{city}" placeholder="도시">
       </div>
-      <div class="input w-full">
-        <input type="text" th:field="*{zipcode}" placeholder="우편번호">
-        <a href="">우편번호 찾기</a>
+
+      <div class="flex items-center">
+        <div class="input" style="width: 50%">
+          <input type="text" th:field="*{zipcode}" placeholder="우편번호">
+        </div>
+        <div class="input ml-5" style="width: 46%">
+          <button class="btn bg-teal-500 text-white">우편번호 찾기</button>
+        </div>
       </div>
+
       <div class="input w-full">
         <input type="text" th:field="*{address1}" placeholder="주소">
       </div>
@@ -37,10 +48,7 @@
         <input type="text" th:field="*{address2}" placeholder="상세주소">
       </div>
 
-      <div class="input w-full">
-        <input type="text" th:field="*{price}" placeholder="금액">
-      </div>
-
+      <span class="text-gray-600 font-medium text-lg">Etc.</span>
       <div class="input w-full">
         <input type="number" th:field="*{guest}" placeholder="게스트">
       </div>
@@ -59,33 +67,77 @@
       <div class="input w-full">
         <input type="text" th:field="*{checkOut}" placeholder="체크아웃">
       </div>
-      <div class="input w-full">
-        <input type="checkbox" th:field="*{instantBook}" placeholder="예약여부">
-      </div>
+
+      <fieldset class="border-b border-gray-200">
+        <div class="divide-y divide-gray-200">
+          <div class="relative flex items-start p-5">
+            <div class="min-w-0 flex-1 text-sm leading-6">
+              <label class="font-medium text-gray-900">예약여부</label>
+              <p id="instantBook-description" class="text-gray-500">사용자가 숙소를 결제할 때 예약을 필수로 해야하는지에 대한 여부를 표시합니다.</p>
+            </div>
+            <div class="ml-3 flex h-6 items-center">
+              <input type="checkbox" aria-describedby="instantBook-description"
+                     class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                     th:field="*{instantBook}" placeholder="예약여부">
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
       <div class="input w-full">
         <select style="height: 70px;" th:field="*{roomType}" placeholder="숙소 타입">
           <option value="">-- 선택 --</option>
-          <option value="">호텔</option>
+          <option th:each="roomType : ${T(com.airbnb.room.entity.RoomType).values()}"
+                  th:value="${roomType}" th:text="${roomType.name}"></option>
+        </select>
+      </div>
+
+      <fieldset class="m-5 mt-8">
+        <legend class="text-base font-semibold leading-6 text-gray-900">편의시설</legend>
+        <div class="mt-2 divide-y divide-gray-200 border-b border-t border-gray-200">
+
+          <div th:each="amenity: ${amenities}" class="relative flex items-start py-4">
+            <div class="min-w-0 flex-1 text-sm leading-6">
+              <label class="select-none font-medium text-gray-900"
+                     th:for="${amenity.id}" th:text="${amenity.name}">Cody Fisher</label>
+            </div>
+            <div class="ml-3 flex h-6 items-center">
+              <input type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
+            </div>
+          </div>
+
+        </div>
+      </fieldset>
+
+      <!--<div class="input w-full">
+        <select style="height: 70px;" th:field="*{amenities}" placeholder="편의시설" multiple>
+          <option value="">== 선택 ==</option>
+          <th:block th:each="amenity: ${amenities}">
+            <option th:value="${amenity.id}" th:text="${amenity.name}"></option>
+          </th:block>
+        </select>
+      </div>-->
+      <div class="input w-full">
+        <select style="height: 70px;" th:field="*{facilities}" placeholder="주변시설" multiple>
+          <option value="">== 선택 ==</option>
+          <th:block th:each="facility: ${facilities}">
+            <option th:value="${facility.id}" th:text="${facility.name}"></option>
+          </th:block>
         </select>
       </div>
       <div class="input w-full">
-        <select style="height: 70px;" placeholder="편의시설" multiple>
-          <option value="">발코니</option>
+        <select style="height: 70px;" th:field="*{houseRules}" placeholder="공용 규칙" multiple>
+          <option value="">== 선택 ==</option>
+          <th:block th:each="houseRule: ${houseRules}">
+            <option th:value="${houseRule.id}" th:text="${houseRule.name}"></option>
+          </th:block>
         </select>
       </div>
       <div class="input w-full">
-        <select style="height: 70px;" placeholder="주변시설" multiple>
-          <option value="">엘리베이터</option>
-        </select>
-      </div>
-      <div class="input w-full">
-        <select style="height: 70px;" placeholder="공용 규칙" multiple>
-          <option value=""></option>
-        </select>
+        <input type="file" id="profile" name="profile" placeholder="파일">
       </div>
       <button class="btn bg-red-500 text-white">숙소 등록하기</button>
     </form>
-
   </div>
 </section>
 </body>
