@@ -25,8 +25,8 @@ public class Room extends BaseEntity {
     private String country;
     private String city;
 
-    @Column(length = 1000)
-    private String address;
+    @Embedded
+    private Address address;
     @ColumnDefault("0")
     private int price;
     @ColumnDefault("1")

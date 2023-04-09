@@ -1,13 +1,12 @@
 package com.airbnb.room.entity;
 
-import com.airbnb.common.BaseEntity;
 import lombok.Getter;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
-public class Facilities extends BaseEntity {
+public class Facilities {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
