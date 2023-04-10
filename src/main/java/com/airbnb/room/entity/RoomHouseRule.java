@@ -1,11 +1,16 @@
 package com.airbnb.room.entity;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class RoomHouseRule {
 
     @Id
@@ -20,4 +25,10 @@ public class RoomHouseRule {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "house_rule_id")
     private HouseRule houseRule;
+
+    public static RoomHouseRule createRoomHouseRule(HouseRule houseRule) {
+        RoomHouseRule roomHouseRule = new RoomHouseRule();
+        roomHouseRule.setHouseRule(houseRule);
+        return roomHouseRule;
+    }
 }

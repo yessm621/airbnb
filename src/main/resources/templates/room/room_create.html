@@ -11,30 +11,41 @@
   <div
       class="container lg:w-5/12 md:w-1/2 xl:w-1/3 mx-auto my-10 flex flex-col items-center border p-6 border-gray-400">
 
-    <form method="POST" class="w-full" th:object="${dto}" th:action="@{/room/create/}">
+    <form method="POST" class="w-full" th:object="${dto}" th:action="@{/rooms/create/}">
+      <div th:if="${#fields.hasGlobalErrors()}">
+        <span class="text-sm text-red-700 font-medium" th:each="err : ${#fields.globalErrors()}" th:text="${err}">
+          숙소 등록 오류
+        </span>
+      </div>
+
       <span class="text-gray-600 font-medium text-lg">Information.</span>
       <div class="input w-full">
         <input type="text" th:field="*{title}" placeholder="숙소 이름">
+        <span class="text-red-700 font-medium text-sm" th:errors="*{title}">오류</span>
       </div>
-      <div class="input w-full has_error">
-        <!--<span class="text-red-700 font-medium text-sm">오류입니다.</span>-->
+      <div class="input w-full">
         <textarea th:field="*{description}" placeholder="설명"></textarea>
+        <span class="text-red-700 font-medium text-sm" th:errors="*{description}">오류</span>
       </div>
       <div class="input w-full">
         <input type="text" th:field="*{price}" placeholder="금액">
+        <span class="text-red-700 font-medium text-sm" th:errors="*{price}">오류</span>
       </div>
 
       <span class="text-gray-600 font-medium text-lg">Address</span>
       <div class="input w-full">
         <input type="text" th:field="*{country}" placeholder="나라">
+        <span class="text-red-700 font-medium text-sm" th:errors="*{country}">오류</span>
       </div>
       <div class="input w-full">
         <input type="text" th:field="*{city}" placeholder="도시">
+        <span class="text-red-700 font-medium text-sm" th:errors="*{city}">오류</span>
       </div>
 
       <div class="flex items-center">
         <div class="input" style="width: 50%">
           <input type="text" th:field="*{zipcode}" placeholder="우편번호">
+          <span class="text-red-700 font-medium text-sm" th:errors="*{zipcode}">오류</span>
         </div>
         <div class="input ml-5" style="width: 46%">
           <button class="btn bg-teal-500 text-white">우편번호 찾기</button>
@@ -43,14 +54,17 @@
 
       <div class="input w-full">
         <input type="text" th:field="*{address1}" placeholder="주소">
+        <span class="text-red-700 font-medium text-sm" th:errors="*{address1}">오류</span>
       </div>
       <div class="input w-full">
         <input type="text" th:field="*{address2}" placeholder="상세주소">
+        <span class="text-red-700 font-medium text-sm" th:errors="*{address2}">오류</span>
       </div>
 
       <span class="text-gray-600 font-medium text-lg">Etc.</span>
       <div class="input w-full">
         <input type="number" th:field="*{guest}" placeholder="게스트">
+        <span class="text-red-700 font-medium text-sm" th:errors="*{guest}">오류</span>
       </div>
       <div class="input w-full">
         <input type="number" th:field="*{bedroom}" placeholder="방">
@@ -62,11 +76,70 @@
         <input type="number" th:field="*{bath}" placeholder="욕실">
       </div>
       <div class="input w-full">
-        <input type="text" th:field="*{checkIn}" placeholder="체크인">
+        <input type="time" th:field="*{checkIn}" placeholder="체크인">
+        <span class="text-red-700 font-medium text-sm" th:errors="*{checkIn}">오류</span>
       </div>
       <div class="input w-full">
-        <input type="text" th:field="*{checkOut}" placeholder="체크아웃">
+        <input type="time" th:field="*{checkOut}" placeholder="체크아웃">
+        <span class="text-red-700 font-medium text-sm" th:errors="*{checkOut}">오류</span>
       </div>
+      <div class="input w-full">
+        <select style="height: 70px;" th:field="*{roomType}" placeholder="숙소 타입">
+          <option value="">-- 선택 --</option>
+          <option th:each="roomType : ${T(com.airbnb.room.entity.RoomType).values()}"
+                  th:value="${roomType}" th:text="${roomType.name}"></option>
+        </select>
+        <span class="text-red-700 font-medium text-sm" th:errors="*{roomType}">오류</span>
+      </div>
+      <!--<div class="input w-full">
+        <input type="file" id="file" name="file" placeholder="파일">
+        <span class="text-red-700 font-medium text-sm" th:errors="*{file}">오류</span>
+      </div>-->
+
+      <fieldset class="m-5 mt-8">
+        <legend class="text-base font-semibold leading-6 text-gray-900">편의시설</legend>
+        <div class="mt-2 divide-y divide-gray-200 border-b border-t border-gray-200">
+          <div th:each="amenity: ${amenities}" class="relative flex items-start py-4">
+            <div class="min-w-0 flex-1 text-sm leading-6">
+              <label class="select-none font-medium text-gray-900"
+                     th:for="${amenity.id}" th:text="${amenity.name}">이름</label>
+            </div>
+            <div class="ml-3 flex h-6 items-center">
+              <input type="checkbox" th:field="*{amenities}" th:value="${amenity.id}" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset class="m-5 mt-8">
+        <legend class="text-base font-semibold leading-6 text-gray-900">주변시설</legend>
+        <div class="mt-2 divide-y divide-gray-200 border-b border-t border-gray-200">
+          <div th:each="facility: ${facilities}" class="relative flex items-start py-4">
+            <div class="min-w-0 flex-1 text-sm leading-6">
+              <label class="select-none font-medium text-gray-900"
+                     th:for="${facility.id}" th:text="${facility.name}">이름</label>
+            </div>
+            <div class="ml-3 flex h-6 items-center">
+              <input type="checkbox" th:field="*{facilities}" th:value="${facility.id}" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset class="m-5 mt-8">
+        <legend class="text-base font-semibold leading-6 text-gray-900">공용 규칙</legend>
+        <div class="mt-2 divide-y divide-gray-200 border-b border-t border-gray-200">
+          <div th:each="houseRule: ${houseRules}" class="relative flex items-start py-4">
+            <div class="min-w-0 flex-1 text-sm leading-6">
+              <label class="select-none font-medium text-gray-900"
+                     th:for="${houseRule.id}" th:text="${houseRule.name}">이름</label>
+            </div>
+            <div class="ml-3 flex h-6 items-center">
+              <input type="checkbox" th:field="*{houseRules}" th:value="${houseRule.id}" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
+            </div>
+          </div>
+        </div>
+      </fieldset>
 
       <fieldset class="border-b border-gray-200">
         <div class="divide-y divide-gray-200">
@@ -76,66 +149,12 @@
               <p id="instantBook-description" class="text-gray-500">사용자가 숙소를 결제할 때 예약을 필수로 해야하는지에 대한 여부를 표시합니다.</p>
             </div>
             <div class="ml-3 flex h-6 items-center">
-              <input type="checkbox" aria-describedby="instantBook-description"
-                     class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                     th:field="*{instantBook}" placeholder="예약여부">
+              <input type="checkbox" th:field="*{instantBook}" aria-describedby="instantBook-description"
+                     class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" placeholder="예약여부">
             </div>
           </div>
         </div>
       </fieldset>
-
-      <div class="input w-full">
-        <select style="height: 70px;" th:field="*{roomType}" placeholder="숙소 타입">
-          <option value="">-- 선택 --</option>
-          <option th:each="roomType : ${T(com.airbnb.room.entity.RoomType).values()}"
-                  th:value="${roomType}" th:text="${roomType.name}"></option>
-        </select>
-      </div>
-
-      <fieldset class="m-5 mt-8">
-        <legend class="text-base font-semibold leading-6 text-gray-900">편의시설</legend>
-        <div class="mt-2 divide-y divide-gray-200 border-b border-t border-gray-200">
-
-          <div th:each="amenity: ${amenities}" class="relative flex items-start py-4">
-            <div class="min-w-0 flex-1 text-sm leading-6">
-              <label class="select-none font-medium text-gray-900"
-                     th:for="${amenity.id}" th:text="${amenity.name}">Cody Fisher</label>
-            </div>
-            <div class="ml-3 flex h-6 items-center">
-              <input type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
-            </div>
-          </div>
-
-        </div>
-      </fieldset>
-
-      <!--<div class="input w-full">
-        <select style="height: 70px;" th:field="*{amenities}" placeholder="편의시설" multiple>
-          <option value="">== 선택 ==</option>
-          <th:block th:each="amenity: ${amenities}">
-            <option th:value="${amenity.id}" th:text="${amenity.name}"></option>
-          </th:block>
-        </select>
-      </div>-->
-      <div class="input w-full">
-        <select style="height: 70px;" th:field="*{facilities}" placeholder="주변시설" multiple>
-          <option value="">== 선택 ==</option>
-          <th:block th:each="facility: ${facilities}">
-            <option th:value="${facility.id}" th:text="${facility.name}"></option>
-          </th:block>
-        </select>
-      </div>
-      <div class="input w-full">
-        <select style="height: 70px;" th:field="*{houseRules}" placeholder="공용 규칙" multiple>
-          <option value="">== 선택 ==</option>
-          <th:block th:each="houseRule: ${houseRules}">
-            <option th:value="${houseRule.id}" th:text="${houseRule.name}"></option>
-          </th:block>
-        </select>
-      </div>
-      <div class="input w-full">
-        <input type="file" id="profile" name="profile" placeholder="파일">
-      </div>
       <button class="btn bg-red-500 text-white">숙소 등록하기</button>
     </form>
   </div>
