@@ -1,9 +1,11 @@
 package com.airbnb.room.dto;
 
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import java.time.LocalTime;
 
 @Getter
 @Setter
@@ -37,8 +39,10 @@ public class RoomCreateRequestDto {
     private int bed;
     private int bath;
 
-    private String checkIn;
-    private String checkOut;
+    @DateTimeFormat(pattern = "HH:mm")
+    private LocalTime checkIn;
+    @DateTimeFormat(pattern = "HH:mm")
+    private LocalTime checkOut;
 
     private Boolean instantBook;
     @NotBlank(message = "숙소 타입을 선택해주세요.")

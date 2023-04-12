@@ -7,6 +7,7 @@ import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,8 +50,8 @@ public class Room extends BaseEntity {
     @ColumnDefault("0")
     private int bath;
 
-    private String checkIn;
-    private String checkOut;
+    private LocalTime checkIn;
+    private LocalTime checkOut;
 
     @Column(columnDefinition = "tinyint(1) default 1")
     private Boolean instantBook;

@@ -5,6 +5,7 @@ import com.airbnb.common.security.CustomUserDetails;
 import com.airbnb.room.dto.RoomCreateRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,6 +26,7 @@ public class RoomController {
     private final FacilitiesRepository facilitiesRepository;
     private final HouseRuleRepository houseRuleRepository;
 
+    @Secured({"ROLE_ADMIN", "ROLE_HOST"})
     @GetMapping("/create")
     public String room(Model model) {
         model.addAttribute("dto", new RoomCreateRequestDto());
@@ -34,6 +36,7 @@ public class RoomController {
         return "/room/room_create";
     }
 
+    @Secured({"ROLE_ADMIN", "ROLE_HOST"})
     @PostMapping("/create")
     public String createRoom(@Validated @ModelAttribute("dto") RoomCreateRequestDto dto, BindingResult result,
                              @CurrentUser CustomUserDetails user) {
