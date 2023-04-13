@@ -10,10 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @Controller
@@ -39,6 +37,8 @@ public class RoomController {
     @Secured({"ROLE_ADMIN", "ROLE_HOST"})
     @PostMapping("/create")
     public String createRoom(@Validated @ModelAttribute("dto") RoomCreateRequestDto dto, BindingResult result,
+                             @RequestParam(value = "thumbnail", required = false) MultipartFile thumbnail,
+                             @RequestParam(value = "photos", required = false) MultipartFile[] photos,
                              @CurrentUser CustomUserDetails user) {
 
         if (result.hasErrors()) {
