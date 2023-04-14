@@ -29,7 +29,7 @@ public class ProfileService {
         ProfileDto dto = ProfileDto.builder()
                 .name(member.getName())
                 .description(member.getDescription())
-                .profile(member.getProfile())
+                .profile(member.getFilePath())
                 .build();
         return dto;
     }
@@ -57,7 +57,8 @@ public class ProfileService {
         if (!profile.isEmpty()) {
             String path = s3Uploader.upload(profile, DIR_NAME);
             log.info("이미지 업로드 경로={}", path);
-            findMember.setProfile(path);
+            findMember.setFilename(profile.getOriginalFilename());
+            findMember.setFilePath(path);
         }
     }
 }

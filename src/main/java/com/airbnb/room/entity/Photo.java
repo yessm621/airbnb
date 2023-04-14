@@ -26,6 +26,8 @@ public class Photo extends BaseEntity {
     @JoinColumn(name = "room_id")
     private Room room;
 
+    private String filename;
+
     @Lob
-    private String file;
+    private String filePath;
 }

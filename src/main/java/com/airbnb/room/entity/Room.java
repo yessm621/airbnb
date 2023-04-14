@@ -7,6 +7,7 @@ import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -71,6 +72,9 @@ public class Room extends BaseEntity {
 
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
     private List<RoomHouseRule> roomHouseRules = new ArrayList<>();
+
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
+    private List<Photo> photos = new ArrayList<>();
 
     public void addRoomAmenities(RoomAmenities roomAmenity) {
         roomAmenities.add(roomAmenity);

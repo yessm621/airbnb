@@ -40,10 +40,13 @@ public class RoomController {
     @PostMapping("/create")
     public String createRoom(@Validated @ModelAttribute("dto") RoomCreateRequestDto dto, BindingResult result,
                              @RequestParam(value = "photos", required = false) MultipartFile[] photos,
-                             @CurrentUser CustomUserDetails user) throws IOException {
+                             @CurrentUser CustomUserDetails user, Model model) throws IOException {
 
         if (result.hasErrors()) {
             log.info("error={}", result);
+            model.addAttribute("amenities", amenitiesRepository.findAll());
+            model.addAttribute("facilities", facilitiesRepository.findAll());
+            model.addAttribute("houseRules", houseRuleRepository.findAll());
             return "/room/room_create";
         }
 

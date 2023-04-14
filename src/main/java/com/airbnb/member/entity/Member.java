@@ -33,8 +33,11 @@ public class Member extends BaseEntity {
     @Column(length = 10)
     private LoginMethod loginMethod; // EMAIL, KAKAO, GITHUB
 
+    private String filename;
+
     @Lob
-    private String profile;
+    private String filePath;
+
     private String birthdate;
 
     @Column(length = 11)

@@ -48,7 +48,11 @@ public class RoomService {
                 String path = s3Uploader.upload(photo, DIR_NAME);
                 log.info("이미지 업로드 경로={}", path);
                 room.setThumbnail(path);
-                Photo savePhoto = Photo.builder().file(path).room(room).build();
+                Photo savePhoto = Photo.builder()
+                        .room(room)
+                        .filename(photo.getOriginalFilename())
+                        .filePath(path)
+                        .build();
                 photoRepository.save(savePhoto);
             }
         }
