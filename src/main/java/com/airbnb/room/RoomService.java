@@ -4,9 +4,12 @@ import com.airbnb.common.s3.S3Uploader;
 import com.airbnb.member.MemberRepository;
 import com.airbnb.member.entity.Member;
 import com.airbnb.room.dto.RoomCreateRequestDto;
+import com.airbnb.room.dto.RoomDto;
 import com.airbnb.room.entity.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,11 +28,16 @@ public class RoomService {
 
     private final MemberRepository memberRepository;
     private final RoomRepository roomRepository;
+    private final RoomRepositoryCustom roomRepositoryCustom;
     private final AmenitiesRepository amenitiesRepository;
     private final FacilitiesRepository facilitiesRepository;
     private final HouseRuleRepository houseRuleRepository;
     private final PhotoRepository photoRepository;
     private final S3Uploader s3Uploader;
+
+    public Page<RoomDto> roomList(Pageable pageable) {
+        return roomRepositoryCustom.roomList(pageable);
+    }
 
     @Transactional
     public void createRoom(RoomCreateRequestDto dto, String email, MultipartFile[] photos) throws IOException {
