@@ -13,6 +13,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+
 @Slf4j
 @Controller
 @RequestMapping("/rooms")
@@ -37,16 +39,15 @@ public class RoomController {
     @Secured({"ROLE_ADMIN", "ROLE_HOST"})
     @PostMapping("/create")
     public String createRoom(@Validated @ModelAttribute("dto") RoomCreateRequestDto dto, BindingResult result,
-                             @RequestParam(value = "thumbnail", required = false) MultipartFile thumbnail,
                              @RequestParam(value = "photos", required = false) MultipartFile[] photos,
-                             @CurrentUser CustomUserDetails user) {
+                             @CurrentUser CustomUserDetails user) throws IOException {
 
         if (result.hasErrors()) {
             log.info("error={}", result);
             return "/room/room_create";
         }
 
-        roomService.createRoom(dto, user.getEmail());
+        roomService.createRoom(dto, user.getEmail(), photos);
 
         return "redirect:/";
     }

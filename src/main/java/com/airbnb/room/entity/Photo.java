@@ -1,14 +1,20 @@
 package com.airbnb.room.entity;
 
 import com.airbnb.common.BaseEntity;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-import static javax.persistence.FetchType.*;
+import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Photo extends BaseEntity {
 
     @Id
