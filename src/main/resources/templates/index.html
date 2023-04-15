@@ -39,20 +39,32 @@
     </div>
 
     <!--paging-->
-    <div class="flex items-center justify-center mx-auto container">
-
-      <a href="?page=1" class="text-teal-500">
-        <i class="fas fa-arrow-left fa-lg"></i>
-      </a>
-
-      <span class="mx-3 font-medium text-lg">
-        Page 1 of 10
-      </span>
-
-      <a href="?page=2" class="text-teal-500">
-        <i class="fas fa-arrow-right fa-lg"></i>
-      </a>
-
+    <div th:if="${!roomList.isEmpty()}" class="flex items-center justify-center mx-auto container">
+      <nav
+          th:with="
+                pageNumber = ${roomList.pageable.pageNumber},
+                pageSize = ${roomList.pageable.pageSize},
+                totalPages = ${roomList.totalPages},
+                startPage = ${T(java.lang.Math).floor(pageNumber / pageSize) * pageSize + 1},
+                tempEndPage = ${startPage + pageSize - 1},
+                endPage = (${tempEndPage < totalPages ? tempEndPage : totalPages})"
+          aria-label="Page navigation">
+        <th:block th:classappend="${roomList.first} ? 'disabled'">
+          <a th:href="${roomList.first} ? '#' : @{/(page=${pageNumber - 1})}" class="text-teal-500"
+             aria-label="Previous">
+            <i class="fas fa-arrow-left fa-lg"></i>
+          </a>
+        </th:block>
+        <th:block th:each="page: ${#numbers.sequence(startPage, endPage)}"
+                  th:classappend="${page == pageNumber + 1} ? 'active'" class="page-item">
+          <a th:text="${page}" class="mx-3 font-medium text-lg" th:href="@{/(page=${page - 1})}"></a>
+        </th:block>
+        <th:block th:classappend="${roomList.last} ? 'disabled'">
+          <a th:href="${roomList.last} ? '#' : @{/(page=${pageNumber + 1})}" class="text-teal-500" aria-label="Next">
+            <i class="fas fa-arrow-right fa-lg"></i>
+          </a>
+        </th:block>
+      </nav>
     </div>
   </div>
 </section>

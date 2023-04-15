@@ -39,6 +39,7 @@ public class RoomService {
         return roomRepositoryCustom.roomList(pageable);
     }
 
+    // TODO:: 개선하고 싶은 부분
     @Transactional
     public void createRoom(RoomCreateRequestDto dto, String email, MultipartFile[] photos) throws IOException {
 
