@@ -1,4 +1,4 @@
-package com.airbnb.room;
+package com.airbnb.facility;
 
 import com.airbnb.room.entity.Facilities;
 import org.springframework.data.jpa.repository.JpaRepository;

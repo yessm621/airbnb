@@ -1,11 +1,11 @@
 package com.airbnb.common;
 
+import com.airbnb.amenity.AmenitiesRepository;
 import com.airbnb.member.MemberRepository;
 import com.airbnb.member.entity.LoginMethod;
 import com.airbnb.member.entity.Member;
 import com.airbnb.member.entity.MemberRole;
 import com.airbnb.member.entity.MemberStatus;
-import com.airbnb.room.AmenitiesRepository;
 import com.airbnb.room.RoomService;
 import com.airbnb.room.dto.RoomCreateRequestDto;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +27,7 @@ public class TestDataInit {
 
     @PostConstruct
     public void init() throws IOException {
-        memberRepository.save(Member.builder()
+        /*memberRepository.save(Member.builder()
                 .email("admin@gmail.com")
                 .password(bCryptPasswordEncoder.encode("test123!!!"))
                 .name("관리자")
@@ -54,6 +54,9 @@ public class TestDataInit {
                     .country("나라" + i)
                     .city("도시" + i)
                     .price(70000 + i)
+                    .zipcode("zipcode" + i)
+                    .address1("address1" + i)
+                    .address2("address2" + i)
                     .guest(2)
                     .bedroom(2)
                     .bed(2)
@@ -65,8 +68,6 @@ public class TestDataInit {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        });
-
-
+        });*/
     }
 }
